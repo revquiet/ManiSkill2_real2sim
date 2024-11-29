@@ -186,3 +186,16 @@ class WidowXSinkCameraSetup(WidowX):
     @classmethod
     def get_default_config(cls):
         return defaults.WidowXSinkCameraSetupConfig()
+    
+
+if __name__=="__main__":
+    engine = sapien.Engine()
+    renderer = sapien.SapienRenderer()
+    engine.set_renderer(renderer)
+
+    scene_config = sapien.SceneConfig()
+    scene = engine.create_scene(scene_config)
+    grx = WidowX(scene= scene ,control_freq=60)
+    grx._after_init()
+    grx.get_fingers_info()
+    pass
