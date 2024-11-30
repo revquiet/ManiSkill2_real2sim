@@ -17,6 +17,7 @@ from mani_skill2_real2sim.agents.robots.googlerobot import (
 )
 from mani_skill2_real2sim.agents.robots.widowx import WidowX, WidowXBridgeDatasetCameraSetup, WidowXSinkCameraSetup
 from mani_skill2_real2sim.agents.robots.panda import Panda
+from mani_skill2_real2sim.agents.robots.grxrobot import GrxRobot
 from mani_skill2_real2sim.envs.sapien_env import BaseEnv
 from mani_skill2_real2sim.sensors.camera import CameraConfig
 from mani_skill2_real2sim.utils.sapien_utils import (
@@ -40,8 +41,9 @@ class CustomSceneEnv(BaseEnv):
                         "google_robot_static_quarter_finger_friction": GoogleRobotStaticBaseQuarterFingerFriction,
                         "google_robot_static_one_eighth_finger_friction": GoogleRobotStaticBaseOneEighthFingerFriction,
                         "google_robot_static_twice_finger_friction": GoogleRobotStaticBaseTwiceFingerFriction,
+                        "grx_robot": GrxRobot
     }
-    agent: Union[GoogleRobotStaticBase, WidowX, Panda]
+    agent: Union[GoogleRobotStaticBase, WidowX, Panda,GrxRobot]
     DEFAULT_ASSET_ROOT: str
     DEFAULT_SCENE_ROOT: str
     DEFAULT_MODEL_JSON: str
@@ -145,6 +147,8 @@ class CustomSceneEnv(BaseEnv):
                 scene_path = str(self.scene_root / "stages/google_pick_coke_can_1_v4.glb") # hardcoded for now
             elif 'widowx' in self.robot_uid:
                 scene_path = str(self.scene_root / "stages/bridge_table_1_v1.glb") # hardcoded for now
+            elif 'grx_robot' in self.robot_uid:
+                scene_path = str(self.scene_root / "stages/bridge_table_1_v1.glb") # hardcoded for now
             else:
                 raise NotImplementedError(f"Default scene path for {self.robot_uid} is not yet set")
         elif "dummy" in self.scene_name:
@@ -157,6 +161,8 @@ class CustomSceneEnv(BaseEnv):
             if 'google_robot_static' in self.robot_uid:
                 scene_offset = np.array([-1.6616, -3.0337, 0.0]) # corresponds to the default offset of google_pick_coke_can_1_v4.glb
             elif 'widowx' in self.robot_uid:
+                scene_offset = np.array([-2.0634, -2.8313, 0.0])# corresponds to the default offset of bridge_table_1_v1.glb
+            elif 'grx_robot' in self.robot_uid:
                 scene_offset = np.array([-2.0634, -2.8313, 0.0])# corresponds to the default offset of bridge_table_1_v1.glb
             else:
                 raise NotImplementedError(f"Default scene offset for {self.robot_uid} is not yet set")
@@ -291,6 +297,10 @@ class CustomSceneEnv(BaseEnv):
             else:
                 raise NotImplementedError(self.robot_uid)
             robot_init_rot_quat = [0, 0, 0, 1]
+        elif 'grx_robot' in self.robot_uid:
+            qpos = np.zeros(19)
+            robot_init_height = 0.91 + 0.017 # base height + ground offset in default scene
+            robot_init_rot_quat = [0, 0, 0, 1]
         else:
             raise NotImplementedError(self.robot_uid)
         
@@ -315,6 +325,10 @@ class CustomSceneEnv(BaseEnv):
                     init_y = 0.028
                 elif self.robot_uid == 'widowx_sink_camera_setup':
                     init_y = 0.070
+            # TODO 
+            elif 'grx_robot' in self.robot_uid:
+                init_x = 0.0
+                init_y = 0.0 
             else:
                 init_x, init_y = 0.0, 0.0
             robot_init_xyz = [init_x, init_y, robot_init_height]

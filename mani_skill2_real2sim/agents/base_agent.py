@@ -153,6 +153,8 @@ class BaseAgent:
 
     def reset(self, init_qpos=None):
         if init_qpos is not None:
+            print("init_qpos",init_qpos,init_qpos.shape)
+            print("dof",self.robot.dof)
             self.robot.set_qpos(init_qpos)
         self.robot.set_qvel(np.zeros(self.robot.dof))
         self.robot.set_qacc(np.zeros(self.robot.dof))

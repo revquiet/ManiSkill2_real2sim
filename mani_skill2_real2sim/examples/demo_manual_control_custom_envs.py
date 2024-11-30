@@ -83,6 +83,13 @@ python mani_skill2_real2sim/examples/demo_manual_control_custom_envs.py -e PutEg
     -c arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos -o rgbd robot widowx_sink_camera_setup sim_freq @500 control_freq @5 \
     scene_name bridge_table_1_v2  rgb_overlay_mode debug rgb_overlay_path data/real_inpainting/bridge_sink.png rgb_overlay_cameras 3rd_view_camera
 
+python mani_skill2_real2sim/examples/demo_manual_control_custom_envs.py -e PutCarrotOnPlateInScene-v0 --enable-sapien-viewer \
+    -c arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos -o rgbd robot grx_robot sim_freq @500 control_freq @5 \
+    scene_name bridge_table_1_v1  rgb_overlay_mode debug rgb_overlay_path data/real_inpainting/bridge_real_eval_1.png rgb_overlay_cameras 3rd_view_camera
+
+python mani_skill2_real2sim/examples/demo_manual_control_custom_envs.py -e StackGreenCubeOnYellowCubeBakedTexInScene-v0 --enable-sapien-viewer \
+    -c arm_pd_ee_delta_pose_align2_gripper_pd_joint_pos -o rgbd --enable-sapien-viewer     prepackaged_config @True     robot grx_robot
+
 """
 
 import argparse
@@ -144,6 +151,13 @@ def main():
             args.env_kwargs["render_camera_cfgs"] = {
                 "render_camera": dict(p=pose.p, q=pose.q)
             }
+        elif "grx_robot" in args.env_kwargs["robot"]:
+            pose = look_at([1.0, 1.0, 2.0], [0.0, 0.0, 0.7])
+            args.env_kwargs["render_camera_cfgs"] = {
+                "render_camera": dict(p=pose.p, q=pose.q)
+            }
+        else:
+            raise Exception('{} robot init failed'.format(args.env_kwargs["robot"]))
 
     from transforms3d.euler import euler2quat
 
@@ -233,6 +247,14 @@ def main():
                     },
                 }
             elif env.robot_uid == "widowx_sink_camera_setup":
+                env_reset_options = {
+                    "obj_init_options": {},
+                    "robot_init_options": {
+                        "init_xy": [0.127, 0.060],
+                        "init_rot_quat": init_rot_quat,
+                    },
+                }
+            elif env.robot_uid == "grx_robot":
                 env_reset_options = {
                     "obj_init_options": {},
                     "robot_init_options": {
