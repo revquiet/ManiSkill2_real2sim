@@ -43,7 +43,7 @@ class CustomSceneEnv(BaseEnv):
                         "google_robot_static_twice_finger_friction": GoogleRobotStaticBaseTwiceFingerFriction,
                         "grx_robot": GrxRobot
     }
-    agent: Union[GoogleRobotStaticBase, WidowX, Panda,GrxRobot]
+    agent: Union[GoogleRobotStaticBase, WidowX, Panda, GrxRobot]
     DEFAULT_ASSET_ROOT: str
     DEFAULT_SCENE_ROOT: str
     DEFAULT_MODEL_JSON: str
@@ -298,9 +298,17 @@ class CustomSceneEnv(BaseEnv):
                 raise NotImplementedError(self.robot_uid)
             robot_init_rot_quat = [0, 0, 0, 1]
         elif 'grx_robot' in self.robot_uid:
-            qpos = np.zeros(19)
+            pi = 3.1415926
+            # qpos = np.array([ 
+            #     0, 0, 0, -3.1415926/2, 0, 0, 0, 1,
+            #     0.,0, 0, -3.1415926/2, 0, 0, 0, -1,]
+            # )
+            qpos = np.array([ 
+                0, 0, 0, -pi/2, 0, 0, 0, 0,]
+            )   
             robot_init_height = 0.91 + 0.017 # base height + ground offset in default scene
             robot_init_rot_quat = [0, 0, 0, 1]
+
         else:
             raise NotImplementedError(self.robot_uid)
         
@@ -325,12 +333,11 @@ class CustomSceneEnv(BaseEnv):
                     init_y = 0.028
                 elif self.robot_uid == 'widowx_sink_camera_setup':
                     init_y = 0.070
-            # TODO 
             elif 'grx_robot' in self.robot_uid:
-                init_x = 0.0
+                init_x = 0.2
                 init_y = 0.0 
             else:
-                init_x, init_y = 0.0, 0.0
+                raise Exception("no robot_uid find")
             robot_init_xyz = [init_x, init_y, robot_init_height]
         
         self.agent.robot.set_pose(sapien.Pose(robot_init_xyz, robot_init_rot_quat))

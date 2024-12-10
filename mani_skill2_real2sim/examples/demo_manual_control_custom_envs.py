@@ -152,7 +152,14 @@ def main():
                 "render_camera": dict(p=pose.p, q=pose.q)
             }
         elif "grx_robot" in args.env_kwargs["robot"]:
-            pose = look_at([1.0, 1.0, 2.0], [0.0, 0.0, 0.7])
+            pose_p = [-0.546907, -0.34798, 1.86542]  # 位置
+            pose_q = [0.851288, -0.148575, 0.347441, 0.364033]  # 四元数
+            pose = look_at([1.0, -1.0, 2.0], [0.0, 0.0, 0.7])
+            args.env_kwargs["render_camera_cfgs"] = {
+                "render_camera": dict(p=pose_p, q=pose_q)
+            }
+        elif "panda" in args.env_kwargs["robot"]:
+            pose = look_at([1.0, -1.0, 2.0], [0.0, 0.0, 0.7])
             args.env_kwargs["render_camera_cfgs"] = {
                 "render_camera": dict(p=pose.p, q=pose.q)
             }
@@ -258,7 +265,7 @@ def main():
                 env_reset_options = {
                     "obj_init_options": {},
                     "robot_init_options": {
-                        "init_xy": [0.127, 0.060],
+                        "init_xy": [0.4, 0.4],
                         "init_rot_quat": init_rot_quat,
                     },
                 }
@@ -280,6 +287,16 @@ def main():
             * env.unwrapped._cameras["overhead_camera"].camera.pose,
         )
     elif "wx250s" in env.agent.robot.name:
+        print(
+            "3rd view camera pose",
+            env.unwrapped._cameras["3rd_view_camera"].camera.pose,
+        )
+        print(
+            "3rd view camera pose wrt robot base",
+            env.agent.robot.pose.inv()
+            * env.unwrapped._cameras["3rd_view_camera"].camera.pose,
+        )
+    elif "grx_robot" in env.agent.robot.name:
         print(
             "3rd view camera pose",
             env.unwrapped._cameras["3rd_view_camera"].camera.pose,
@@ -328,10 +345,10 @@ def main():
     gripper_action = get_reset_gripper_action()
 
     EE_ACTION = (
-        0.1 if not (is_google_robot or is_widowx) else 0.02
+        0.02 if not (is_google_robot or is_widowx) else 0.02
     )  # google robot and widowx use unnormalized action space
     EE_ROT_ACTION = (
-        1.0 if not (is_google_robot or is_widowx) else 0.1
+        0.1 if not (is_google_robot or is_widowx) else 0.1
     )  # google robot and widowx use unnormalized action space
 
     # print("obj pose", env.obj.pose, "tcp pose", env.tcp.pose)
@@ -450,7 +467,7 @@ def main():
             gripper_action = get_reset_gripper_action()
             after_reset = True
             continue
-        elif key == None:  # exit
+        elif key == "q":  # exit
             break
 
         # Visualize observation

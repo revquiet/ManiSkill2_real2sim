@@ -42,8 +42,6 @@ class GrxDefaultConfig:
         )
 
         self.arm_joint_names = [
-            "waist_yaw_joint", "waist_pitch_joint", "waist_roll_joint",
-
             "left_shoulder_pitch_joint",
             "left_shoulder_roll_joint",
             "left_shoulder_yaw_joint",
@@ -52,15 +50,16 @@ class GrxDefaultConfig:
             "left_wrist_roll_joint",
             "left_wrist_pitch_joint",
 
-            "right_shoulder_pitch_joint",
-            "right_shoulder_roll_joint",
-            "right_shoulder_yaw_joint",
-            "right_elbow_pitch_joint",
-            "right_wrist_yaw_joint",
-            "right_wrist_roll_joint",
-            "right_wrist_pitch_joint",
+            # "right_shoulder_pitch_joint",
+            # "right_shoulder_roll_joint",
+            # "right_shoulder_yaw_joint",
+            # "right_elbow_pitch_joint",
+            # "right_wrist_yaw_joint",
+            # "right_wrist_roll_joint",
+            # "right_wrist_pitch_joint",
         ]
-        self.gripper_joint_names = ["left_jaw_joint", "right_jaw_joint"]
+        # self.gripper_joint_names = ["left_jaw_joint", "right_jaw_joint"]
+        self.gripper_joint_names = ["left_jaw_joint"]
 
         # # arm_pd_ee_delta_pose_align_interpolate_gripper_pd_joint_pos, 3hz
         # self.arm_stiffness = [1193.2765654645982, 800.0, 784.3309604605763, 1250.3737197881153, 1392.0546244178072, 1038.3774360126893]
@@ -74,47 +73,43 @@ class GrxDefaultConfig:
 
         # arm_pd_ee_target_delta_pose_align2_gripper_pd_joint_pos, 5hz non-blocking
         self.arm_stiffness = [
-            362.5214, 362.5214, 362.5214,
+            1e3,
+            1e3,
+            1e3,
+            1e3,
+            1e3,
+            1e3,
+            1e3,
 
-            92.85,
-            92.85,
-            112.06,
-            112.06,
-            10,
-            10,
-            10,
-
-            92.85,
-            92.85,
-            112.06,
-            112.06,
-            10,
-            10,
-            10,
+            # 92.85,
+            # 92.85,
+            # 112.06,
+            # 112.06,
+            # 10,
+            # 10,
+            # 10,
         ]
         self.arm_damping = [
-            10.0833, 10.0833, 10.0833,
+            1e2,
+            1e2,
+            1e2,
+            1e2,
+            1e2,
+            1e2,
+            1e2,
 
-            2.575,
-            2.575,
-            3.1,
-            3.1,
-            1.,
-            1.,
-            1.,
-
-            2.575,
-            2.575,
-            3.1,
-            3.1,
-            1.,
-            1.,
-            1.,
+            # 2.575,
+            # 2.575,
+            # 3.1,
+            # 3.1,
+            # 1.,
+            # 1.,
+            # 1.,
         ]
 
-        self.arm_force_limit = [82.5, 82.5, 82.5, 
-                                38, 38, 30, 30, 10.2, 3.95, 3.95,
-                                38, 38, 30, 30, 10.2, 3.95, 3.95]
+        # self.arm_force_limit = [38, 38, 30, 30, 10.2, 3.95, 3.95,
+        #                         38, 38, 30, 30, 10.2, 3.95, 3.95]
+        self.arm_force_limit = [38, 38, 30, 30, 10.2, 3.95, 3.95]
         self.arm_friction = 0.0
         self.arm_vel_limit = 1.5
         self.arm_acc_limit = 2.0
@@ -129,7 +124,7 @@ class GrxDefaultConfig:
         self.gripper_acc_limit = 0.50
         self.gripper_jerk_limit = 5.0
 
-        self.ee_link_name = "left_end_effector_link"
+        self.ee_link_name = "left_jaw_link"
 
     @property
     def controllers(self):
@@ -140,8 +135,10 @@ class GrxDefaultConfig:
         # -------------------------------------------------------------------------- #
         arm_common_args = [
             self.arm_joint_names,
-            -1.0,  # dummy limit, which is unused since normalize_action=False
-            1.0,
+            # -1.0,  # dummy limit, which is unused since normalize_action=False
+            # 1.0,
+            None,
+            None,
             np.pi / 2,
             self.arm_stiffness,
             self.arm_damping,
