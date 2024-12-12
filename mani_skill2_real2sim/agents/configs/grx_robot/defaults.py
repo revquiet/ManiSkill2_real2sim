@@ -124,7 +124,8 @@ class GrxDefaultConfig:
         self.gripper_acc_limit = 0.50
         self.gripper_jerk_limit = 5.0
 
-        self.ee_link_name = "left_jaw_link"
+        # self.ee_link_name = "left_jaw_link"
+        self.ee_link_name = "left_end_effector_link"
 
     @property
     def controllers(self):
@@ -202,8 +203,8 @@ class GrxDefaultConfig:
         )  # since real gripper is PID, we use extra clearance to mitigate PD small errors; also a trick to have force when grasping
         gripper_pd_joint_pos = PDJointPosMimicControllerConfig(
             self.gripper_joint_names,
-            0.015 - extra_gripper_clearance,
-            0.037 + extra_gripper_clearance,
+            0.1 - extra_gripper_clearance,
+            0.9 + extra_gripper_clearance,
             self.gripper_stiffness,
             self.gripper_damping,
             self.gripper_force_limit,
@@ -212,8 +213,8 @@ class GrxDefaultConfig:
         )
         gripper_pd_joint_target_pos = PDJointPosMimicControllerConfig(
             self.gripper_joint_names,
-            0.015 - extra_gripper_clearance,
-            0.037 + extra_gripper_clearance,
+            0. - extra_gripper_clearance,
+            0.9 + extra_gripper_clearance,
             self.gripper_stiffness,
             self.gripper_damping,
             self.gripper_force_limit,
@@ -223,6 +224,7 @@ class GrxDefaultConfig:
             normalize_action=True,
             drive_mode="force",
         )
+        # TODO
         gripper_pd_joint_delta_pos = PDJointPosMimicControllerConfig(
             self.gripper_joint_names,
             -(0.037 - 0.015) - extra_gripper_clearance,
@@ -234,6 +236,7 @@ class GrxDefaultConfig:
             normalize_action=True,
             drive_mode="force",
         )
+        # TODO
         gripper_pd_joint_target_delta_pos = PDJointPosMimicControllerConfig(
             self.gripper_joint_names,
             -(0.037 - 0.015) - extra_gripper_clearance,
@@ -250,8 +253,8 @@ class GrxDefaultConfig:
         )
         gripper_pid_joint_pos = PIDJointPosMimicControllerConfig(
             self.gripper_joint_names,
-            0.015,
-            0.037,
+            0.0,
+            1.0,
             self.gripper_pid_stiffness,
             self.gripper_pid_damping,
             self.gripper_force_limit,
