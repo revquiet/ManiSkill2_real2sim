@@ -265,7 +265,7 @@ def main():
                 env_reset_options = {
                     "obj_init_options": {},
                     "robot_init_options": {
-                        "init_xy": [0.4, 0.4],
+                        "init_xy": [0.1, 0.1],
                         "init_rot_quat": init_rot_quat,
                     },
                 }

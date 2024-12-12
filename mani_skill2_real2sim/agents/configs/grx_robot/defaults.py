@@ -289,10 +289,10 @@ class GrxDefaultConfig:
         return [
             CameraConfig(
                 uid="3rd_view_camera",  # the camera used for real evaluation
-                p=[0.0, -0.16, 0.36],
+                p=[0.15, -0.16, 0.72],
                 # this rotation allows simulation proxy table to align almost perfectly with real table for bridge_real_eval_1.png
                 # when calling env.reset(options={'robot_init_options': {'init_xy': [0.147, 0.028], 'init_rot_quat': [0, 0, 0, 1]}})
-                q=look_at([0, 0, 0], [1, 0.553, -1.085]).q,
+                q=look_at([0, 0, 0], [1, 0.553, -1.885]).q,
                 width=640,
                 height=480,
                 actor_uid="base_link",
