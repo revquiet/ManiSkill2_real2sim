@@ -42,24 +42,24 @@ class GrxDefaultConfig:
         )
 
         self.arm_joint_names = [
-            "left_shoulder_pitch_joint",
-            "left_shoulder_roll_joint",
-            "left_shoulder_yaw_joint",
-            "left_elbow_pitch_joint",
-            "left_wrist_yaw_joint",
-            "left_wrist_roll_joint",
-            "left_wrist_pitch_joint",
+            # "left_shoulder_pitch_joint",
+            # "left_shoulder_roll_joint",
+            # "left_shoulder_yaw_joint",
+            # "left_elbow_pitch_joint",
+            # "left_wrist_yaw_joint",
+            # "left_wrist_roll_joint",
+            # "left_wrist_pitch_joint",
 
-            # "right_shoulder_pitch_joint",
-            # "right_shoulder_roll_joint",
-            # "right_shoulder_yaw_joint",
-            # "right_elbow_pitch_joint",
-            # "right_wrist_yaw_joint",
-            # "right_wrist_roll_joint",
-            # "right_wrist_pitch_joint",
+            "right_shoulder_pitch_joint",
+            "right_shoulder_roll_joint",
+            "right_shoulder_yaw_joint",
+            "right_elbow_pitch_joint",
+            "right_wrist_yaw_joint",
+            "right_wrist_roll_joint",
+            "right_wrist_pitch_joint",
         ]
         # self.gripper_joint_names = ["left_jaw_joint", "right_jaw_joint"]
-        self.gripper_joint_names = ["left_jaw_joint"]
+        self.gripper_joint_names = ["right_jaw_joint"]
 
         # # arm_pd_ee_delta_pose_align_interpolate_gripper_pd_joint_pos, 3hz
         # self.arm_stiffness = [1193.2765654645982, 800.0, 784.3309604605763, 1250.3737197881153, 1392.0546244178072, 1038.3774360126893]
@@ -125,7 +125,7 @@ class GrxDefaultConfig:
         self.gripper_jerk_limit = 5.0
 
         # self.ee_link_name = "left_jaw_link"
-        self.ee_link_name = "left_end_effector_link"
+        self.ee_link_name = "right_end_effector_link"
 
     @property
     def controllers(self):
@@ -203,8 +203,8 @@ class GrxDefaultConfig:
         )  # since real gripper is PID, we use extra clearance to mitigate PD small errors; also a trick to have force when grasping
         gripper_pd_joint_pos = PDJointPosMimicControllerConfig(
             self.gripper_joint_names,
-            0.1 - extra_gripper_clearance,
-            0.9 + extra_gripper_clearance,
+            -0.9 - extra_gripper_clearance,
+            -0.1 + extra_gripper_clearance,
             self.gripper_stiffness,
             self.gripper_damping,
             self.gripper_force_limit,
@@ -213,8 +213,8 @@ class GrxDefaultConfig:
         )
         gripper_pd_joint_target_pos = PDJointPosMimicControllerConfig(
             self.gripper_joint_names,
-            0. - extra_gripper_clearance,
-            0.9 + extra_gripper_clearance,
+            -0.9 - extra_gripper_clearance,
+            -0.1 + extra_gripper_clearance,
             self.gripper_stiffness,
             self.gripper_damping,
             self.gripper_force_limit,
@@ -253,8 +253,8 @@ class GrxDefaultConfig:
         )
         gripper_pid_joint_pos = PIDJointPosMimicControllerConfig(
             self.gripper_joint_names,
+            -1.0,
             0.0,
-            1.0,
             self.gripper_pid_stiffness,
             self.gripper_pid_damping,
             self.gripper_force_limit,

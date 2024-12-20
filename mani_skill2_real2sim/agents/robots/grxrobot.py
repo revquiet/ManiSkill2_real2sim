@@ -56,11 +56,17 @@ class GrxRobot(BaseAgent):
         super()._after_init()
         
         # ignore collision between gripper bar link and two gripper fingers
-        left_upper_arm_yaw_link = get_entity_by_name(self.robot.get_links(),"left_upper_arm_yaw_link")
-        left_hand_yaw_link = get_entity_by_name(self.robot.get_links(),"left_hand_yaw_link")
-        for l in left_upper_arm_yaw_link.get_collision_shapes():
+        # left_upper_arm_yaw_link = get_entity_by_name(self.robot.get_links(),"left_upper_arm_yaw_link")
+        # left_hand_yaw_link = get_entity_by_name(self.robot.get_links(),"left_hand_yaw_link")
+        # for l in left_upper_arm_yaw_link.get_collision_shapes():
+        #     l.set_collision_groups(1, 1, 0b11, 0)
+        # for l in left_hand_yaw_link.get_collision_shapes():
+        #     l.set_collision_groups(1, 1, 0b01, 0)
+        right_upper_arm_yaw_link = get_entity_by_name(self.robot.get_links(),"right_upper_arm_yaw_link")
+        right_hand_yaw_link = get_entity_by_name(self.robot.get_links(),"right_hand_yaw_link")
+        for l in right_upper_arm_yaw_link.get_collision_shapes():
             l.set_collision_groups(1, 1, 0b11, 0)
-        for l in left_hand_yaw_link.get_collision_shapes():
+        for l in right_hand_yaw_link.get_collision_shapes():
             l.set_collision_groups(1, 1, 0b01, 0)
         # gripper_bar_link = get_entity_by_name(self.robot.get_links(), "gripper_bar_link")
         # left_finger_link = get_entity_by_name(self.robot.get_links(), "left_finger_link")
