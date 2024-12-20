@@ -152,8 +152,8 @@ def main():
                 "render_camera": dict(p=pose.p, q=pose.q)
             }
         elif "grx_robot" in args.env_kwargs["robot"]:
-            pose_p = [-0.546907, -0.34798, 1.86542]  # 位置
-            pose_q = [0.851288, -0.148575, 0.347441, 0.364033]  # 四元数
+            pose_p = [0.384727, 1.09747, 2.09416]  # 位置
+            pose_q = [0.820177, -0.170846, 0.313408, 0.447099]  # 四元数
             pose = look_at([1.0, -1.0, 2.0], [0.0, 0.0, 0.7])
             args.env_kwargs["render_camera_cfgs"] = {
                 "render_camera": dict(p=pose_p, q=pose_q)
@@ -265,7 +265,7 @@ def main():
                 env_reset_options = {
                     "obj_init_options": {},
                     "robot_init_options": {
-                        "init_xy": [0.1, 0.1],
+                        "init_xy": [1.4, 2.0],
                         "init_rot_quat": init_rot_quat,
                     },
                 }
@@ -374,8 +374,7 @@ def main():
         # Interaction
         # -------------------------------------------------------------------------- #
         # Input
-        key = opencv_viewer.imshow(render_frame)
-
+        key = opencv_viewer.imshow(render_frame, delay=1)
         if has_base:
             base_action = np.zeros([4])  # hardcoded
         else:
