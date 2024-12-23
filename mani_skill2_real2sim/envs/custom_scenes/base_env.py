@@ -148,7 +148,7 @@ class CustomSceneEnv(BaseEnv):
             elif 'widowx' in self.robot_uid:
                 scene_path = str(self.scene_root / "stages/bridge_table_1_v1.glb") # hardcoded for now
             elif 'grx_robot' in self.robot_uid:
-                scene_path = str(self.scene_root / "stages/bridge_table_1_v1.glb") # hardcoded for now
+                scene_path = str(self.scene_root / "stages/fourier_table_1_v1.glb") # hardcoded for now
             else:
                 raise NotImplementedError(f"Default scene path for {self.robot_uid} is not yet set")
         elif "dummy" in self.scene_name:
@@ -305,8 +305,9 @@ class CustomSceneEnv(BaseEnv):
             # )
             qpos = np.array([ 
                 0, 0, 0, -pi/2, 0, 0, 0, 0,]
-            )   
-            robot_init_height = 0.91 + 0.017 # base height + ground offset in default scene
+            )
+            # robot_init_height = 0.98 + 0.017 # base height + ground offset in default scene
+            robot_init_height = 0.957
             robot_init_rot_quat = [0, 0, 0, 1]
 
         else:
