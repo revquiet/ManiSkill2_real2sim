@@ -265,8 +265,8 @@ def main():
                 env_reset_options = {
                     "obj_init_options": {},
                     "robot_init_options": {
-                        "init_xy": [1.4, 2.0],
-                        "init_rot_quat": init_rot_quat,
+                        "init_xy": [1.4, 1.99],
+                        "init_rot_quat": (Pose(q=euler2quat(0, 0, 0.03)) * Pose(q=[0, 0, 0, 1])).q,
                     },
                 }
             env_reset_options["obj_init_options"]["episode_id"] = 0

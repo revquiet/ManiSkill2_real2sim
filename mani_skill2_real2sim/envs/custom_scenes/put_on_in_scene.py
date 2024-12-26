@@ -318,6 +318,43 @@ class PutCarrotOnPlateInScene(PutOnBridgeInSceneEnv):
     def get_language_instruction(self, **kwargs):
         return "put carrot on plate"
 
+@register_env("PutCarrotOnPlateInScene-v1", max_episode_steps=60)
+class PutCarrotOnPlateInSceneV1(PutOnBridgeInSceneEnv):
+    def __init__(self, **kwargs):
+        source_obj_name = "coke_can"
+        target_obj_name = "bridge_plate_objaverse_larger"
+
+        xy_center = np.array([1.15, 2.0])
+        half_edge_length_x = 0.075
+        half_edge_length_y = 0.075
+        grid_pos = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]) * 2 - 1
+        grid_pos = (
+            grid_pos * np.array([half_edge_length_x, half_edge_length_y])[None]
+            + xy_center[None]
+        )
+
+        xy_configs = []
+        for i, grid_pos_1 in enumerate(grid_pos):
+            for j, grid_pos_2 in enumerate(grid_pos):
+                if i != j:
+                    xy_configs.append(np.array([grid_pos_2, grid_pos_1]))
+
+        quat_configs = [
+            np.array([euler2quat(np.pi/2, 0, np.pi), [1, 0, 0, 0]]),
+            np.array([euler2quat(0, 0, -np.pi / 2), [1, 0, 0, 0]]),
+        ]
+
+        super().__init__(
+            source_obj_name=source_obj_name,
+            target_obj_name=target_obj_name,
+            xy_configs=xy_configs,
+            quat_configs=quat_configs,
+            **kwargs,
+        )
+
+    def get_language_instruction(self, **kwargs):
+        return "put carrot on plate"
+
 
 @register_env("StackGreenCubeOnYellowCubeInScene-v0", max_episode_steps=60)
 class StackGreenCubeOnYellowCubeInScene(PutOnBridgeInSceneEnv):
