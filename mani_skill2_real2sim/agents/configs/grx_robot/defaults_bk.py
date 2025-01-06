@@ -6,10 +6,10 @@ from mani_skill2_real2sim.sensors.camera import CameraConfig
 from mani_skill2_real2sim.utils.sapien_utils import look_at
 
 
-class GrxDefaultConfig:
+class GrxDefaultConfig_jaw:
     def __init__(self) -> None:
         self.urdf_path = (
-            "{PACKAGE_ASSET_DIR}/descriptions/grx_description/GR1T2/urdf/GR1T2_fourier_hand_6dof_no_leg.urdf"
+            "{PACKAGE_ASSET_DIR}/descriptions/grx_description/GR1T2/urdf/GR1T2_jaw.urdf"
         )
 
         finger_min_patch_radius = 0.01  # used to calculate torsional friction
@@ -59,11 +59,7 @@ class GrxDefaultConfig:
             "right_wrist_pitch_joint",
         ]
         # self.gripper_joint_names = ["left_jaw_joint", "right_jaw_joint"]
-        self.gripper_joint_names = ["R_thumb_proximal_yaw_joint", "R_thumb_proximal_pitch_joint", "R_thumb_distal_joint",
-                                    "R_index_proximal_joint", "R_index_intermediate_joint", "R_middle_proximal_joint", 
-                                    "R_middle_intermediate_joint", "R_ring_proximal_joint", "R_ring_intermediate_joint", 
-                                    "R_pinky_proximal_joint", "R_pinky_intermediate_joint"
-        ]
+        self.gripper_joint_names = ["right_jaw_joint"]
 
         # # arm_pd_ee_delta_pose_align_interpolate_gripper_pd_joint_pos, 3hz
         # self.arm_stiffness = [1193.2765654645982, 800.0, 784.3309604605763, 1250.3737197881153, 1392.0546244178072, 1038.3774360126893]

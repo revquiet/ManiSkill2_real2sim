@@ -80,26 +80,47 @@ class GrxRobot(BaseAgent):
         
         self.base_link = [x for x in self.robot.get_links() if x.name == "base_link"][0]
 
+        self.L_index_proximal_joint = get_entity_by_name(
+            self.robot.get_joints(), "L_index_proximal_joint"
+        )
+        self.L_hand_base_link = get_entity_by_name(
+            self.robot.get_links(), "L_hand_base_link"
+        )
+        self.L_index_proximal_link = get_entity_by_name(
+            self.robot.get_links(), "L_index_proximal_link"
+        )
 
-        self.left_jaw_joint = get_entity_by_name(
-            self.robot.get_joints(), "left_jaw_joint"
+
+        self.R_index_proximal_joint = get_entity_by_name(
+            self.robot.get_joints(), "R_index_proximal_joint"
         )
-        self.right_jaw_joint = get_entity_by_name(
-            self.robot.get_joints(), "right_jaw_joint"
+        self.R_hand_base_link = get_entity_by_name(
+            self.robot.get_links(), "R_hand_base_link"
+        )
+        self.R_index_proximal_link = get_entity_by_name(
+            self.robot.get_links(), "R_index_proximal_link"
         )
 
-        self.left_hand_pitch_link = get_entity_by_name(
-            self.robot.get_links(), "left_hand_pitch_link"
-        )
-        self.left_jaw_link = get_entity_by_name(
-            self.robot.get_links(), "left_jaw_link"
-        )
-        self.right_hand_pitch_link = get_entity_by_name(
-            self.robot.get_links(), "right_hand_pitch_link"
-        )
-        self.right_jaw_link = get_entity_by_name(
-            self.robot.get_links(), "right_jaw_link"
-        )
+
+        # self.left_jaw_joint = get_entity_by_name(
+        #     self.robot.get_joints(), "left_jaw_joint"
+        # )
+        # self.left_hand_pitch_link = get_entity_by_name(
+        #     self.robot.get_links(), "left_hand_pitch_link"
+        # )
+        # self.left_jaw_link = get_entity_by_name(
+        #     self.robot.get_links(), "left_jaw_link"
+        # )
+
+        # self.right_jaw_joint = get_entity_by_name(
+        #     self.robot.get_joints(), "right_jaw_joint"
+        # )
+        # self.right_hand_pitch_link = get_entity_by_name(
+        #     self.robot.get_links(), "right_hand_pitch_link"
+        # )
+        # self.right_jaw_link = get_entity_by_name(
+        #     self.robot.get_links(), "right_jaw_link"
+        # )
 
     # 1代表全部闭合，计算的是左右手的jaw关节的开闭状态
     def get_gripper_closedness(self):
@@ -134,15 +155,15 @@ class GrxRobot(BaseAgent):
         contacts = self.scene.get_contacts()
 
         limpulse_jaw = get_pairwise_contact_impulse(
-            contacts, self.left_jaw_link, actor
+            contacts, self.L_hand_base_link, actor
         )
         limpulse_hand = get_pairwise_contact_impulse(
-            contacts, self.left_hand_pitch_link, actor
+            contacts, self.L_index_proximal_link, actor
         )
 
         # direction to open the gripper
-        ldirection_jaw = self.left_jaw_link.pose.to_transformation_matrix()[:3, 1]
-        ldirection_hand = self.left_hand_pitch_link.pose.to_transformation_matrix()[:3, 1]
+        ldirection_jaw = self.L_hand_base_link.pose.to_transformation_matrix()[:3, 1]
+        ldirection_hand = self.L_index_proximal_link.pose.to_transformation_matrix()[:3, 1]
 
         # angle between impulse and open direction
         langle_jaw = compute_angle_between(ldirection_jaw, limpulse_jaw)
@@ -157,15 +178,15 @@ class GrxRobot(BaseAgent):
 
         # -------------------
         rimpulse_jaw = get_pairwise_contact_impulse(
-            contacts, self.right_jaw_link, actor
+            contacts, self.R_hand_base_link, actor
         )
         rimpulse_hand = get_pairwise_contact_impulse(
-            contacts, self.right_hand_pitch_link, actor
+            contacts, self.R_index_proximal_link, actor
         )
 
         # direction to open the gripper
-        rdirection_jaw = self.right_jaw_link.pose.to_transformation_matrix()[:3, 1]
-        rdirection_hand = self.right_hand_pitch_link.pose.to_transformation_matrix()[:3, 1]
+        rdirection_jaw = self.R_hand_base_link.pose.to_transformation_matrix()[:3, 1]
+        rdirection_hand = self.R_index_proximal_link.pose.to_transformation_matrix()[:3, 1]
 
         # angle between impulse and open direction
         rangle_jaw = compute_angle_between(rdirection_jaw, rimpulse_jaw)

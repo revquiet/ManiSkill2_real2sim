@@ -296,7 +296,7 @@ def main():
             env.agent.robot.pose.inv()
             * env.unwrapped._cameras["3rd_view_camera"].camera.pose,
         )
-    elif "grx_robot" in env.agent.robot.name:
+    elif "GR1T2_jaw" in env.agent.robot.name:
         print(
             "3rd view camera pose",
             env.unwrapped._cameras["3rd_view_camera"].camera.pose,
