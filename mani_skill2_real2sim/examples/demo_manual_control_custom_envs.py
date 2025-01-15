@@ -296,7 +296,7 @@ def main():
             env.agent.robot.pose.inv()
             * env.unwrapped._cameras["3rd_view_camera"].camera.pose,
         )
-    elif "GR1T2_jaw" in env.agent.robot.name:
+    elif "GR1T2_jaw" in env.agent.robot.name or "GR1T2_fourier_hand_6dof_no_leg" in env.agent.robot.name:
         print(
             "3rd view camera pose",
             env.unwrapped._cameras["3rd_view_camera"].camera.pose,
@@ -328,6 +328,7 @@ def main():
     num_arms = sum("arm" in x for x in env.agent.controller.configs)
     has_gripper = any("gripper" in x for x in env.agent.controller.configs)
     is_google_robot = "google_robot" in env.agent.robot.name
+    is_grx_robot_6dof_no_leg = "GR1T2_fourier_hand_6dof_no_leg" in env.agent.robot.name
     is_widowx = "wx250s" in env.agent.robot.name
     is_gripper_delta_target_control = (
         env.agent.controller.controllers["gripper"].config.use_target
@@ -336,8 +337,10 @@ def main():
 
     def get_reset_gripper_action():
         # open gripper at initialization
-        if not is_google_robot:
-            return 1
+        if is_google_robot:
+            return -1
+        elif is_grx_robot_6dof_no_leg:
+            return np.zeros([11])
         else:
             # for google robot, open-and-close actions are reversed
             return -1
@@ -374,7 +377,8 @@ def main():
         # Interaction
         # -------------------------------------------------------------------------- #
         # Input
-        key = opencv_viewer.imshow(render_frame, delay=1)
+        key = opencv_viewer.imshow(render_frame, delay=3)
+        # key = opencv_viewer.imshow(render_frame)
         if has_base:
             base_action = np.zeros([4])  # hardcoded
         else:
@@ -445,16 +449,29 @@ def main():
 
         # Gripper
         if has_gripper:
-            if not is_google_robot:
+            if is_google_robot:
                 if key == "f":  # open gripper
-                    gripper_action = 1
-                elif key == "g":  # close gripper
                     gripper_action = -1
+                elif key == "g":  # close gripper
+                    gripper_action = 1
+            elif is_grx_robot_6dof_no_leg:
+                intermediate_indices =[0, 4, 6, 8, 10]
+                proximal_indices = [3, 5, 7, 9]
+                if key == "f":
+                    gripper_action[intermediate_indices] = 0
+                    gripper_action[proximal_indices] = 0
+                    gripper_action[1] = 1.22
+                    gripper_action[2] = 1.22
+                elif key == "g":
+                    gripper_action[intermediate_indices] = -1.74
+                    gripper_action[proximal_indices] = -1.57
+                    gripper_action[1] = 0
+                    gripper_action[2] = 0
             else:
                 if key == "f":  # open gripper
-                    gripper_action = -1
-                elif key == "g":  # close gripper
                     gripper_action = 1
+                elif key == "g":  # close gripper
+                    gripper_action = -1
 
         # Other functions
         if key == "0":  # switch to SAPIEN viewer
@@ -518,8 +535,12 @@ def main():
         print("action", action)
         obs, reward, terminated, truncated, info = env.step(action)
 
-        if is_gripper_delta_target_control:
-            gripper_action = 0
+        # TODO
+        try:
+            if is_gripper_delta_target_control:
+                gripper_action = 0
+        except NameError:
+            print("gripper_action size not matched with grx_robot fourier hand")
 
         # print("obj pose", env.obj.pose, "tcp pose", env.tcp.pose)
         print("tcp pose wrt robot base", env.agent.robot.pose.inv() * env.tcp.pose)

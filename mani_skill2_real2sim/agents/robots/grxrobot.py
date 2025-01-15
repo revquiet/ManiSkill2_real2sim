@@ -68,6 +68,35 @@ class GrxRobot(BaseAgent):
             l.set_collision_groups(1, 1, 0b11, 0)
         for l in right_hand_yaw_link.get_collision_shapes():
             l.set_collision_groups(1, 1, 0b01, 0)
+        
+        R_hand_base_link = get_entity_by_name(self.robot.get_links(),"R_hand_base_link")
+
+        R_thumb_proximal_base_link = get_entity_by_name(self.robot.get_links(),"R_thumb_proximal_base_link")
+        R_thumb_proximal_link = get_entity_by_name(self.robot.get_links(),"R_thumb_proximal_link")
+        R_thumb_distal_link = get_entity_by_name(self.robot.get_links(),"R_thumb_distal_link")
+
+        R_index_proximal_link = get_entity_by_name(self.robot.get_links(),"R_index_proximal_link")
+        R_middle_proximal_link = get_entity_by_name(self.robot.get_links(),"R_middle_proximal_link")
+        R_ring_proximal_link = get_entity_by_name(self.robot.get_links(),"R_ring_proximal_link")
+        R_pinky_proximal_link = get_entity_by_name(self.robot.get_links(),"R_pinky_proximal_link")
+
+        R_index_intermediate_link = get_entity_by_name(self.robot.get_links(),"R_index_intermediate_link")
+        R_middle_intermediate_link = get_entity_by_name(self.robot.get_links(),"R_middle_intermediate_link")
+        R_ring_intermediate_link = get_entity_by_name(self.robot.get_links(),"R_ring_intermediate_link")
+        R_pinky_intermediate_link = get_entity_by_name(self.robot.get_links(),"R_pinky_intermediate_link")
+
+        hand_links = [
+            "R_hand_base_link", "R_thumb_proximal_base_link","R_thumb_proximal_link", "R_thumb_distal_link",
+            "R_index_proximal_link", "R_middle_proximal_link", "R_ring_proximal_link",
+            "R_pinky_proximal_link", "R_index_intermediate_link", "R_middle_intermediate_link",
+            "R_ring_intermediate_link", "R_pinky_intermediate_link"
+        ]
+
+        for hand_link in hand_links:
+            l = get_entity_by_name(self.robot.get_links(),hand_link)
+            for s in l.get_collision_shapes():
+                s.set_collision_groups(0b0001, 0b1111, 0b1111, 0)
+        
         # gripper_bar_link = get_entity_by_name(self.robot.get_links(), "gripper_bar_link")
         # left_finger_link = get_entity_by_name(self.robot.get_links(), "left_finger_link")
         # right_finger_link = get_entity_by_name(self.robot.get_links(), "right_finger_link")

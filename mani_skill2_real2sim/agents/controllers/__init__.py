@@ -9,6 +9,14 @@ from .pd_joint_pos import (
     PIDJointPosMimicController,
     PIDJointPosMimicControllerConfig,
 )
+from .grx_pd_joint_pos import (
+    GrxPDJointPosController,
+    GrxPDJointPosControllerConfig,
+    GrxPDJointPosMimicControllerConfig,
+    GrxPIDJointPosController,
+    GrxPIDJointPosControllerConfig,
+    GrxPIDJointPosMimicControllerConfig,
+)
 from .pd_ee_pose import (
     PDEEPosController,
     PDEEPosControllerConfig,

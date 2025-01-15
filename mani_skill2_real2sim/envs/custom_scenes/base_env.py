@@ -305,10 +305,10 @@ class CustomSceneEnv(BaseEnv):
             # )
             qpos = np.array([ 
                 0, 0, 0, -pi/2, 0, 0, 0, 
-                0, 0, 0, 0, 0, 
-                0, 0, 0, 0, 0, 
-                0]
-            )
+                # 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                -1.74, 0, 0, -1.57, -1.74, -1.57, -1.74, -1.57, -1.74, -1.57, -1.74,
+                # 0, 1.22, 1.22, 0, 0, 0, 0, 0, 0, 0, 0,
+            ])
             # robot_init_height = 0.98 + 0.017 # base height + ground offset in default scene
             robot_init_height = 0.957
             robot_init_rot_quat = [0, 0, 0, 1]

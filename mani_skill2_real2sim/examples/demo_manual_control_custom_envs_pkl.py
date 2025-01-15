@@ -382,7 +382,7 @@ def main():
     # -------------------------------------------------------------------------- #
     import pickle
     # 打开 pkl 文件
-    with open('/home/fftai/Code/git_repo/SimplerEnv/sysid_log/sysid_dataset.pkl', 'rb') as f:
+    with open('/home/fftai/Code/python/SimplerEnv/sysid_log/sysid_dataset.pkl', 'rb') as f:
         data = pickle.load(f)
     data_iter = iter(data[3])
 

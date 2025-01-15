@@ -58,10 +58,10 @@ class GrxDefaultConfig:
             "right_wrist_roll_joint",
             "right_wrist_pitch_joint",
         ]
-        # self.gripper_joint_names = ["left_jaw_joint", "right_jaw_joint"]
         self.gripper_joint_names = ["R_thumb_proximal_yaw_joint", "R_thumb_proximal_pitch_joint", "R_thumb_distal_joint",
-                                    "R_index_proximal_joint", "R_index_intermediate_joint", "R_middle_proximal_joint", 
-                                    "R_middle_intermediate_joint", "R_ring_proximal_joint", "R_ring_intermediate_joint", 
+                                    "R_index_proximal_joint", "R_index_intermediate_joint", 
+                                    "R_middle_proximal_joint", "R_middle_intermediate_joint", 
+                                    "R_ring_proximal_joint", "R_ring_intermediate_joint", 
                                     "R_pinky_proximal_joint", "R_pinky_intermediate_joint"
         ]
 
@@ -118,12 +118,12 @@ class GrxDefaultConfig:
         self.arm_vel_limit = 1.5
         self.arm_acc_limit = 2.0
 
-        self.gripper_stiffness = 1000
-        self.gripper_damping = 200
-        self.gripper_pid_stiffness = 1000
-        self.gripper_pid_damping = 200
+        self.gripper_stiffness = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
+        self.gripper_damping = [20,20,20,20,20,20,20,20,20,20,20]
+        self.gripper_pid_stiffness = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000]
+        self.gripper_pid_damping = [200,200,200,200,200,200,200,200,200,200,200]
         self.gripper_pid_integral = 300
-        self.gripper_force_limit = 60
+        self.gripper_force_limit = [60,60,60,60,60,60,60,60,60,60,60]
         self.gripper_vel_limit = 0.12
         self.gripper_acc_limit = 0.50
         self.gripper_jerk_limit = 5.0
@@ -205,17 +205,29 @@ class GrxDefaultConfig:
         extra_gripper_clearance = (
             0.001
         )  # since real gripper is PID, we use extra clearance to mitigate PD small errors; also a trick to have force when grasping
-        gripper_pd_joint_pos = PDJointPosMimicControllerConfig(
+        # gripper_grx_pd_joint_pos = PDJointPosMimicControllerConfig(
+        #     self.gripper_joint_names,
+        #     -0.9 - extra_gripper_clearance,
+        #     -0.1 + extra_gripper_clearance,
+        #     self.gripper_stiffness,
+        #     self.gripper_damping,
+        #     self.gripper_force_limit,
+        #     normalize_action=True,
+        #     drive_mode="force",
+        # )
+        gripper_grx_pd_joint_pos = GrxPDJointPosMimicControllerConfig(
             self.gripper_joint_names,
-            -0.9 - extra_gripper_clearance,
-            -0.1 + extra_gripper_clearance,
+            # -0.9 - extra_gripper_clearance,
+            # -0.1 + extra_gripper_clearance,
+            None,
+            None,
             self.gripper_stiffness,
             self.gripper_damping,
             self.gripper_force_limit,
-            normalize_action=True,
+            normalize_action=False,
             drive_mode="force",
         )
-        gripper_pd_joint_target_pos = PDJointPosMimicControllerConfig(
+        gripper_grx_pd_joint_target_pos = GrxPDJointPosMimicControllerConfig(
             self.gripper_joint_names,
             -0.9 - extra_gripper_clearance,
             -0.1 + extra_gripper_clearance,
@@ -229,7 +241,7 @@ class GrxDefaultConfig:
             drive_mode="force",
         )
         # TODO
-        gripper_pd_joint_delta_pos = PDJointPosMimicControllerConfig(
+        gripper_grx_pd_joint_delta_pos = GrxPDJointPosMimicControllerConfig(
             self.gripper_joint_names,
             -(0.037 - 0.015) - extra_gripper_clearance,
             0.037 - 0.015 + extra_gripper_clearance,
@@ -241,7 +253,7 @@ class GrxDefaultConfig:
             drive_mode="force",
         )
         # TODO
-        gripper_pd_joint_target_delta_pos = PDJointPosMimicControllerConfig(
+        gripper_grx_pd_joint_target_delta_pos = GrxPDJointPosMimicControllerConfig(
             self.gripper_joint_names,
             -(0.037 - 0.015) - extra_gripper_clearance,
             0.037 - 0.015 + extra_gripper_clearance,
@@ -255,7 +267,18 @@ class GrxDefaultConfig:
             normalize_action=True,
             drive_mode="force",
         )
-        gripper_pid_joint_pos = PIDJointPosMimicControllerConfig(
+        gripper_grx_pid_joint_pos = GrxPIDJointPosMimicControllerConfig(
+            self.gripper_joint_names,
+            -1.0,
+            0.0,
+            self.gripper_pid_stiffness,
+            self.gripper_pid_damping,
+            self.gripper_force_limit,
+            integral=self.gripper_pid_integral,
+            normalize_action=True,
+            drive_mode="force",
+        )
+        gripper_grx_pid_joint_pos = GrxPIDJointPosMimicControllerConfig(
             self.gripper_joint_names,
             -1.0,
             0.0,
@@ -267,11 +290,11 @@ class GrxDefaultConfig:
             drive_mode="force",
         )
         _C["gripper"] = dict(
-            gripper_pd_joint_pos=gripper_pd_joint_pos,
-            gripper_pd_joint_target_pos=gripper_pd_joint_target_pos,
-            gripper_pd_joint_delta_pos=gripper_pd_joint_delta_pos,
-            gripper_pd_joint_target_delta_pos=gripper_pd_joint_target_delta_pos,
-            gripper_pid_joint_pos=gripper_pid_joint_pos,
+            gripper_grx_pd_joint_pos=gripper_grx_pd_joint_pos,
+            gripper_grx_pd_joint_target_pos=gripper_grx_pd_joint_target_pos,
+            gripper_grx_pd_joint_delta_pos=gripper_grx_pd_joint_delta_pos,
+            gripper_grx_pd_joint_target_delta_pos=gripper_grx_pd_joint_target_delta_pos,
+            gripper_grx_pid_joint_pos=gripper_grx_pid_joint_pos,
         )
 
         controller_configs = {}

@@ -7,8 +7,8 @@ from gymnasium import spaces
 from ..base_controller import BaseController, ControllerConfig
 
 
-class PDJointPosController(BaseController):
-    config: "PDJointPosControllerConfig"
+class GrxPDJointPosController(BaseController):
+    config: "GrxPDJointPosControllerConfig"
 
     def _get_joint_limits(self):
         qlimits = self.articulation.get_qlimits()[self.joint_indices]
@@ -51,12 +51,18 @@ class PDJointPosController(BaseController):
 
     def set_drive_targets(self, targets):
         self._last_drive_qpos_targets = targets
+        # targets = [-1.74, 0, 0, -1.57, -1.74, -1.57, -1.74, -1.57, -1.74, -1.57, -1.74]
+        targets = [0, 1.22, 1.22, 0, 0, 0, 0, 0, 0, 0, 0,]
         for i, joint in enumerate(self.joints):
             joint.set_drive_target(targets[i])
+            print("drive_target:",joint.get_drive_target())
+            print("drive_velocity_target:",joint.get_drive_velocity_target())
+            print("limit:",joint.get_limits())
 
     def set_drive_velocity_targets(self, targets):
         for i, joint in enumerate(self.joints):
             joint.set_drive_velocity_target(targets[i])
+
 
     def set_action(self, action: np.ndarray):
         action = self._preprocess_action(action)
@@ -171,7 +177,7 @@ class PDJointPosController(BaseController):
 
 
 @dataclass
-class PDJointPosControllerConfig(ControllerConfig):
+class GrxPDJointPosControllerConfig(ControllerConfig):
     lower: Union[None, float, Sequence[float]]
     upper: Union[None, float, Sequence[float]]
     stiffness: Union[float, Sequence[float]]
@@ -193,24 +199,25 @@ class PDJointPosControllerConfig(ControllerConfig):
     interpolate_planner_jerklim: float = 50.0
     small_action_repeat_last_target: bool = False
     normalize_action: bool = True
-    controller_cls = PDJointPosController
+    controller_cls = GrxPDJointPosController
 
 
-class PDJointPosMimicController(PDJointPosController):
+class GrxPDJointPosMimicController(GrxPDJointPosController):
     def _get_joint_limits(self):
         joint_limits = super()._get_joint_limits()
-        diff = joint_limits[0:-1] - joint_limits[1:]
-        assert np.allclose(diff, 0), "Mimic joints should have the same limit"
-        return joint_limits[0:1]
+        return joint_limits
+        # diff = joint_limits[0:-1] - joint_limits[1:]
+        # assert np.allclose(diff, 0), "Mimic joints should have the same limit"
+        # return joint_limits[0:1]
 
 
 
-class PDJointPosMimicControllerConfig(PDJointPosControllerConfig):
-    controller_cls = PDJointPosMimicController
+class GrxPDJointPosMimicControllerConfig(GrxPDJointPosControllerConfig):
+    controller_cls = GrxPDJointPosMimicController
 
 
-class PIDJointPosController(PDJointPosController):
-    config: "PIDJointPosControllerConfig"
+class GrxPIDJointPosController(GrxPDJointPosController):
+    config: "GrxPIDJointPosControllerConfig"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -244,12 +251,12 @@ class PIDJointPosController(PDJointPosController):
 
 
 @dataclass
-class PIDJointPosControllerConfig(PDJointPosControllerConfig):
+class GrxPIDJointPosControllerConfig(GrxPDJointPosControllerConfig):
     integral: Union[float, Sequence[float]] = 100.0
-    controller_cls = PIDJointPosController
+    controller_cls = GrxPIDJointPosController
 
 
-class PIDJointPosMimicController(PIDJointPosController):
+class GrxPIDJointPosMimicController(GrxPIDJointPosController):
     def _get_joint_limits(self):
         joint_limits = super()._get_joint_limits()
         diff = joint_limits[0:-1] - joint_limits[1:]
@@ -257,5 +264,5 @@ class PIDJointPosMimicController(PIDJointPosController):
         return joint_limits[0:1]
 
 
-class PIDJointPosMimicControllerConfig(PIDJointPosControllerConfig):
-    controller_cls = PIDJointPosMimicController
+class GrxPIDJointPosMimicControllerConfig(GrxPIDJointPosControllerConfig):
+    controller_cls = GrxPIDJointPosMimicController
