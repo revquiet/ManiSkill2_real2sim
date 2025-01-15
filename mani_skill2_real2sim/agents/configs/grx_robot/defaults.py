@@ -9,7 +9,7 @@ from mani_skill2_real2sim.utils.sapien_utils import look_at
 class GrxDefaultConfig:
     def __init__(self) -> None:
         self.urdf_path = (
-            "{PACKAGE_ASSET_DIR}/descriptions/grx_description/GR1T2/urdf/GR1T2_fourier_hand_6dof_no_leg.urdf"
+            "{PACKAGE_ASSET_DIR}/descriptions/grx_description/GR1T2/urdf/GR1T2_ability_hand_6dof_no_leg.urdf"
         )
 
         finger_min_patch_radius = 0.01  # used to calculate torsional friction
@@ -58,13 +58,17 @@ class GrxDefaultConfig:
             "right_wrist_roll_joint",
             "right_wrist_pitch_joint",
         ]
-        self.gripper_joint_names = ["R_thumb_proximal_yaw_joint", "R_thumb_proximal_pitch_joint", "R_thumb_distal_joint",
-                                    "R_index_proximal_joint", "R_index_intermediate_joint", 
-                                    "R_middle_proximal_joint", "R_middle_intermediate_joint", 
-                                    "R_ring_proximal_joint", "R_ring_intermediate_joint", 
-                                    "R_pinky_proximal_joint", "R_pinky_intermediate_joint"
-        ]
-
+        # self.gripper_joint_names = ["R_thumb_proximal_yaw_joint", "R_thumb_proximal_pitch_joint", "R_thumb_distal_joint",
+        #                             "R_index_proximal_joint", "R_index_intermediate_joint", 
+        #                             "R_middle_proximal_joint", "R_middle_intermediate_joint", 
+        #                             "R_ring_proximal_joint", "R_ring_intermediate_joint", 
+        #                             "R_pinky_proximal_joint", "R_pinky_intermediate_joint"
+        # ]
+        self.gripper_joint_names = ["R_thumb_q1", "R_thumb_q2", "R_thumb_tip_joint", 
+                                    "R_index_q1", "R_index_q2", 
+                                    "R_middle_q1", "R_middle_q2", 
+                                    "R_ring_q1", "R_ring_q2", 
+                                    "R_pinky_q1", "R_pinky_q2"]
         # # arm_pd_ee_delta_pose_align_interpolate_gripper_pd_joint_pos, 3hz
         # self.arm_stiffness = [1193.2765654645982, 800.0, 784.3309604605763, 1250.3737197881153, 1392.0546244178072, 1038.3774360126893]
         # self.arm_damping = [75.5250991585983, 20.0, 23.646570105574618, 23.825760721440837, 67.97737990215525, 78.14407359073823]
@@ -318,7 +322,7 @@ class GrxDefaultConfig:
                 uid="3rd_view_camera",  # the camera used for real evaluation
                 p=[0.11241, 0.0, 0.55041],
                 # this rotation allows simulation proxy table to align almost perfectly with real table for bridge_real_eval_1.png
-                # when calling env.reset(options={'robot_init_options': {'init_xy': [0.147, 0.028], 'init_rot_quat': [0, 0, 0, 1]}})
+                # when calling env.reset(options={"robot_init_options': {'init_xy': [0.147, 0.028], 'init_rot_quat': [0, 0, 0, 1]}})
                 fov=127,
                 q=look_at([0, 0, 0], [1, 0, -1]).q,
                 width=1280,

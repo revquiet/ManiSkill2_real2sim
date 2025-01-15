@@ -52,12 +52,12 @@ class GrxPDJointPosController(BaseController):
     def set_drive_targets(self, targets):
         self._last_drive_qpos_targets = targets
         # targets = [-1.74, 0, 0, -1.57, -1.74, -1.57, -1.74, -1.57, -1.74, -1.57, -1.74]
-        targets = [0, 1.22, 1.22, 0, 0, 0, 0, 0, 0, 0, 0,]
+        # targets = [0, 1.22, 1.22, 0, 0, 0, 0, 0, 0, 0, 0,]
         for i, joint in enumerate(self.joints):
             joint.set_drive_target(targets[i])
-            print("drive_target:",joint.get_drive_target())
-            print("drive_velocity_target:",joint.get_drive_velocity_target())
-            print("limit:",joint.get_limits())
+            # print("drive_target:",joint.get_drive_target())
+            # print("drive_velocity_target:",joint.get_drive_velocity_target())
+            # print("limit:",joint.get_limits())
 
     def set_drive_velocity_targets(self, targets):
         for i, joint in enumerate(self.joints):

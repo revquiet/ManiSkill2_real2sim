@@ -329,6 +329,7 @@ def main():
     has_gripper = any("gripper" in x for x in env.agent.controller.configs)
     is_google_robot = "google_robot" in env.agent.robot.name
     is_grx_robot_6dof_no_leg = "GR1T2_fourier_hand_6dof_no_leg" in env.agent.robot.name
+    is_grx_robot_ability_hand_6dof_no_leg = "GR1T2_ability_hand_6dof_no_leg" in env.agent.robot.name
     is_widowx = "wx250s" in env.agent.robot.name
     is_gripper_delta_target_control = (
         env.agent.controller.controllers["gripper"].config.use_target
@@ -340,6 +341,8 @@ def main():
         if is_google_robot:
             return -1
         elif is_grx_robot_6dof_no_leg:
+            return np.zeros([11])
+        elif is_grx_robot_ability_hand_6dof_no_leg:
             return np.zeros([11])
         else:
             # for google robot, open-and-close actions are reversed
@@ -467,6 +470,11 @@ def main():
                     gripper_action[proximal_indices] = -1.57
                     gripper_action[1] = 0
                     gripper_action[2] = 0
+            elif is_grx_robot_ability_hand_6dof_no_leg:
+                if key == "f":
+                    gripper_action = [-90/180*3.14159, 90/180*3.14159, -90/180*3.14159, 90/180*3.14159, 90/180*3.14159, 90/180*3.14159, 90/180*3.14159, 90/180*3.14159, 90/180*3.14159, 90/180*3.14159, 90/180*3.14159]
+                elif key == "g":
+                    gripper_action = np.zeros([11])
             else:
                 if key == "f":  # open gripper
                     gripper_action = 1
