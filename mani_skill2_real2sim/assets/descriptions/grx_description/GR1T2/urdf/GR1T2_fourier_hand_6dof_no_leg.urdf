@@ -697,7 +697,7 @@
           rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -705,7 +705,7 @@
         <mesh
           filename="../meshes/left_hand_roll_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="left_wrist_roll_joint"
@@ -755,7 +755,7 @@
           rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -763,7 +763,7 @@
         <mesh
           filename="../meshes/left_hand_pitch_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="left_wrist_pitch_joint"
@@ -2125,7 +2125,7 @@
           rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2133,7 +2133,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_thumb_proximal_base_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_thumb_proximal_yaw_joint"
@@ -2183,7 +2183,7 @@
           rgba="0.86667 0.86667 0.8902 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2191,7 +2191,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_thumb_proximal_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_thumb_proximal_pitch_joint"
@@ -2241,7 +2241,7 @@
           rgba="0.86667 0.86667 0.8902 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2249,7 +2249,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_thumb_distal_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_thumb_distal_joint"
@@ -2324,7 +2324,7 @@
           rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2332,7 +2332,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_index_proximal_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_index_proximal_joint"
@@ -2382,7 +2382,7 @@
           rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2390,7 +2390,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_index_intermediate_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_index_intermediate_joint"
@@ -2465,7 +2465,7 @@
           rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2473,7 +2473,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_middle_proximal_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_middle_proximal_joint"
@@ -2523,7 +2523,7 @@
           rgba="0.86667 0.86667 0.8902 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2531,7 +2531,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_middle_intermediate_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_middle_intermediate_joint"
@@ -2606,7 +2606,7 @@
           rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2614,7 +2614,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_ring_proximal_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_ring_proximal_joint"
@@ -2664,7 +2664,7 @@
           rgba="0.29804 0.29804 0.29804 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2672,7 +2672,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_ring_intermediate_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_ring_intermediate_joint"
@@ -2747,7 +2747,7 @@
           rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2755,7 +2755,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_pinky_proximal_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_pinky_proximal_joint"
@@ -2805,7 +2805,7 @@
           rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2813,7 +2813,7 @@
         <mesh
           filename="../meshes/fourier_hand_6dof/R_pinky_intermediate_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="R_pinky_intermediate_joint"
@@ -2890,7 +2890,7 @@
           rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2898,7 +2898,7 @@
         <mesh
           filename="../meshes/head_roll_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="head_roll_joint"
@@ -2948,7 +2948,7 @@
           rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -2956,7 +2956,7 @@
         <mesh
           filename="../meshes/head_pitch_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="head_pitch_joint"
@@ -3061,7 +3061,7 @@
           rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
-    <!-- <collision>
+    <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
@@ -3069,7 +3069,7 @@
         <mesh
           filename="../meshes/imu_link.STL" />
       </geometry>
-    </collision> -->
+    </collision>
   </link>
   <joint
     name="imu_joint"
