@@ -460,8 +460,8 @@ def main():
                 if key == "f":
                     gripper_action[intermediate_indices] = 0
                     gripper_action[proximal_indices] = 0
-                    gripper_action[1] = 1.22
-                    gripper_action[2] = 1.22
+                    gripper_action[1] = -1.22
+                    gripper_action[2] = -1.22
                 elif key == "g":
                     gripper_action[intermediate_indices] = -1.74
                     gripper_action[proximal_indices] = -1.57
