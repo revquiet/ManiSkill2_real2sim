@@ -102,6 +102,8 @@ from mani_skill2_real2sim.envs.sapien_env import BaseEnv
 from mani_skill2_real2sim.utils.visualization.cv2_utils import OpenCVViewer
 from mani_skill2_real2sim.utils.sapien_utils import look_at, normalize_vector
 from sapien.core import Pose
+import logging
+import colorlog
 
 MS1_ENV_IDS = [
     "OpenCabinetDoor-v1",
@@ -136,6 +138,27 @@ def main():
     np.set_printoptions(suppress=True, precision=3)
     args = parse_args()
 
+    # ----------------debug logger-------------------------#
+    handler = colorlog.StreamHandler()
+    formatter = colorlog.ColoredFormatter(
+        "%(log_color)s%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        log_colors={
+            "DEBUG": "cyan",
+            "INFO": "green",
+            "WARNING": "yellow",
+            "ERROR": "red",
+            "CRITICAL": "bold_red",
+        },
+    )
+    handler.setFormatter(formatter)
+
+    # 配置 Logger
+    logger = logging.getLogger("simplerEnv")
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    # --------------------------------------------------------- #
+
     if args.env_id in MS1_ENV_IDS:
         if args.control_mode is not None and not args.control_mode.startswith("base"):
             args.control_mode = "base_pd_joint_vel_arm_" + args.control_mode
@@ -152,9 +175,11 @@ def main():
                 "render_camera": dict(p=pose.p, q=pose.q)
             }
         elif "grx_robot" in args.env_kwargs["robot"]:
-            pose_p = [0.384727, 1.09747, 2.09416]  # 位置
-            pose_q = [0.820177, -0.170846, 0.313408, 0.447099]  # 四元数
-            pose = look_at([1.0, -1.0, 2.0], [0.0, 0.0, 0.7])
+            # pose_p = [0.384727, 1.09747, 2.09416]  # 位置
+            # pose_q = [0.820177, -0.170846, 0.313408, 0.447099]  # 四元数
+            pose_p =  [0.90535, 1.75501, 1.524]
+            pose_q = [0.860914, -0.138904, 0.336395, 0.355487]
+            # pose = look_at([1.0, -1.0, 2.0], [0.0, 0.0, 0.7])
             args.env_kwargs["render_camera_cfgs"] = {
                 "render_camera": dict(p=pose_p, q=pose_q)
             }
@@ -356,6 +381,14 @@ def main():
 
     # print("obj pose", env.obj.pose, "tcp pose", env.tcp.pose)
     print("qpos", env.agent.robot.get_qpos())
+    # -------------------------------------------------------------------------- #
+    # input action from pkl
+    # -------------------------------------------------------------------------- #
+    import pickle
+    # 打开 pkl 文件
+    with open('/home/fftai/Code/python/SimplerEnv/sysid_log/sysid_dataset_6dof.pkl', 'rb') as f:
+        data = pickle.load(f)
+    data_iter = iter(data[4])
 
     while True:
         # -------------------------------------------------------------------------- #
@@ -377,7 +410,7 @@ def main():
         # Interaction
         # -------------------------------------------------------------------------- #
         # Input
-        key = opencv_viewer.imshow(render_frame, delay=3)
+        key = opencv_viewer.imshow(render_frame, delay=1)
         # key = opencv_viewer.imshow(render_frame)
         if has_base:
             base_action = np.zeros([4])  # hardcoded
@@ -516,6 +549,14 @@ def main():
                 trimesh.PointCloud(xyzw[mask, :3], rgb[mask]).show()
 
         # -------------------------------------------------------------------------- #
+        try:
+            item = next(data_iter)
+            ee_action = np.concatenate((item["action_world_vector"],item["action_rotation_delta"]),axis=0)
+            gripper_action = item["action_gripper"][-11:]
+        except StopIteration:
+            logger.info("iter have arrive the end of data_iter")
+        # ee_action = np.concatenate((item["action_world_vector"],np.zeros(3)),axis=0)
+        # -------------------------------------------------------------------------- #
         # Post-process action
         # -------------------------------------------------------------------------- #
         if args.env_id in MS1_ENV_IDS:
@@ -546,11 +587,11 @@ def main():
             print("gripper_action size not matched with grx_robot fourier hand")
 
         # print("obj pose", env.obj.pose, "tcp pose", env.tcp.pose)
-        print("tcp pose wrt robot base", env.agent.robot.pose.inv() * env.tcp.pose)
+        # print("tcp pose wrt robot base", env.agent.robot.pose.inv() * env.tcp.pose)
         print("qpos", env.agent.robot.get_qpos())
-        print("reward", reward)
-        print("terminated", terminated, "truncated", truncated)
-        print("info", info)
+        # print("reward", reward)
+        # print("terminated", terminated, "truncated", truncated)
+        # print("info", info)
 
     env.close()
 

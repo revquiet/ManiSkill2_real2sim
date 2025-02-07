@@ -61,8 +61,8 @@ class GrxDefaultConfig:
         self.gripper_joint_names = ["R_thumb_proximal_yaw_joint", "R_thumb_proximal_pitch_joint", "R_thumb_distal_joint",
                                     "R_index_proximal_joint", "R_index_intermediate_joint", 
                                     "R_middle_proximal_joint", "R_middle_intermediate_joint", 
+                                    "R_pinky_proximal_joint", "R_pinky_intermediate_joint",
                                     "R_ring_proximal_joint", "R_ring_intermediate_joint", 
-                                    "R_pinky_proximal_joint", "R_pinky_intermediate_joint"
         ]
 
         # # arm_pd_ee_delta_pose_align_interpolate_gripper_pd_joint_pos, 3hz
@@ -118,8 +118,8 @@ class GrxDefaultConfig:
         self.arm_vel_limit = 1.5
         self.arm_acc_limit = 2.0
 
-        self.gripper_stiffness = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
-        self.gripper_damping = [20,20,20,20,20,20,20,20,20,20,20]
+        self.gripper_stiffness = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000]
+        self.gripper_damping = [200,200,200,200,200,200,200,200,200,200,200]
         self.gripper_pid_stiffness = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000]
         self.gripper_pid_damping = [200,200,200,200,200,200,200,200,200,200,200]
         self.gripper_pid_integral = 300
@@ -316,11 +316,11 @@ class GrxDefaultConfig:
         return [
             CameraConfig(
                 uid="3rd_view_camera",  # the camera used for real evaluation
-                p=[0.11241, 0.0, 0.55041],
+                p=[0.11241, 0.8, 0.55041],
                 # this rotation allows simulation proxy table to align almost perfectly with real table for bridge_real_eval_1.png
                 # when calling env.reset(options={'robot_init_options': {'init_xy': [0.147, 0.028], 'init_rot_quat': [0, 0, 0, 1]}})
                 fov=127,
-                q=look_at([0, 0, 0], [1, 0, -1]).q,
+                q=look_at([0, 0, 0], [1, -1, -1]).q,
                 width=1280,
                 height=720,
                 actor_uid="base_link",
