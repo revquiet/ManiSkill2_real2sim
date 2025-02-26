@@ -12,6 +12,7 @@ from mani_skill2_real2sim import ASSET_DIR
 
 from .base_env import CustomBridgeObjectsInSceneEnv
 from .move_near_in_scene import MoveNearInSceneEnv
+from sapien.core import Pose
 
 class PutOnInSceneEnv(MoveNearInSceneEnv):
     
@@ -318,13 +319,14 @@ class PutCarrotOnPlateInScene(PutOnBridgeInSceneEnv):
     def get_language_instruction(self, **kwargs):
         return "put carrot on plate"
 
-@register_env("PutCarrotOnPlateInScene-v1", max_episode_steps=60)
+@register_env("PutCarrotOnPlateInScene-v1", max_episode_steps=400)
 class PutCarrotOnPlateInSceneV1(PutOnBridgeInSceneEnv):
     def __init__(self, **kwargs):
-        source_obj_name = "coke_can"
+        # source_obj_name = "coke_can"
+        source_obj_name = "orange"
         target_obj_name = "bridge_plate_objaverse_larger"
 
-        xy_center = np.array([1.15, 2.0])
+        xy_center = np.array([1.08, 2.03])
         half_edge_length_x = 0.075
         half_edge_length_y = 0.075
         grid_pos = np.array([[0, 0], [0, 1], [1, 0], [1, 1]]) * 2 - 1
@@ -353,7 +355,29 @@ class PutCarrotOnPlateInSceneV1(PutOnBridgeInSceneEnv):
         )
 
     def get_language_instruction(self, **kwargs):
-        return "put carrot on plate"
+        return "put coke can on plate"
+    
+    def _setup_prepackaged_env_init_config(self):
+        ret = super()._setup_prepackaged_env_init_config()
+        ret["robot"] = "grx_robot"
+        ret["control_freq"] = 5
+        ret["sim_freq"] = 500
+        ret["control_mode"] = "arm_pd_ee_target_delta_pose_align2_gripper_grx_pd_joint_pos"
+        ret["scene_name"] = "fourier_table_1_v1"
+        ret["camera_cfgs"] = {"add_segmentation": False}
+        ret["rgb_overlay_path"] = str(
+            ASSET_DIR / "real_inpainting/fourier_table_a0.png"
+        )
+        ret["rgb_overlay_cameras"] = ["3rd_view_camera"]
+        return ret
+    
+    def _additional_prepackaged_config_reset(self, options):
+        # use prepackaged robot evaluation configs under visual matching setup
+        options["robot_init_options"] = {
+            "init_xy": [1.4, 1.99],
+            "init_rot_quat": (Pose(q=euler2quat(0, 0, 0.03)) * Pose(q=[0, 0, 0, 1])).q,
+        }
+        return False
 
 
 @register_env("StackGreenCubeOnYellowCubeInScene-v0", max_episode_steps=60)
