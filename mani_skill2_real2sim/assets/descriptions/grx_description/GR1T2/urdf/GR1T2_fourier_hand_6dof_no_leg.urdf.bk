@@ -1820,10 +1820,8 @@
       </geometry>
       <material
         name="">
-        <!-- <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" /> -->
         <color
-          rgba="1 0 0 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <!-- <collision>
@@ -1879,9 +1877,9 @@
           filename="../meshes/right_hand_yaw_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision name="right_hand_yaw_link.STL">
@@ -1934,9 +1932,9 @@
           filename="../meshes/right_hand_roll_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <!-- <collision>
@@ -1992,9 +1990,9 @@
           filename="../meshes/right_hand_pitch_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <!-- <collision>
@@ -2069,9 +2067,9 @@
           filename="../meshes/fourier_hand_6dof/R_hand_base_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.86667 0.86667 0.8902 1" />
       </material>
     </visual>
     <collision>
@@ -2122,9 +2120,9 @@
           filename="../meshes/fourier_hand_6dof/R_thumb_proximal_base_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
     <collision>
@@ -2180,9 +2178,11 @@
           filename="../meshes/fourier_hand_6dof/R_thumb_proximal_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
+        <!-- <color
+          rgba="0.86667 0.86667 0.8902 1" /> -->
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="15 13 12 1" />
       </material>
     </visual>
     <collision>
@@ -2238,9 +2238,9 @@
           filename="../meshes/fourier_hand_6dof/R_thumb_distal_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.86667 0.86667 0.8902 1" />
       </material>
     </visual>
     <collision>
@@ -2284,8 +2284,8 @@
       <geometry>
         <sphere radius="0.005" />
       </geometry>
-      <material name="green">
-        <color rgba="0.25 0.25 0.25 1" />
+      <material name="yellow">
+        <color rgba="0.9 1 0 1" />
       </material>
     </visual>
   </link>
@@ -2321,9 +2321,9 @@
           filename="../meshes/fourier_hand_6dof/R_index_proximal_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
     <collision>
@@ -2379,9 +2379,9 @@
           filename="../meshes/fourier_hand_6dof/R_index_intermediate_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
@@ -2462,9 +2462,9 @@
           filename="../meshes/fourier_hand_6dof/R_middle_proximal_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
     <collision>
@@ -2520,9 +2520,9 @@
           filename="../meshes/fourier_hand_6dof/R_middle_intermediate_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.86667 0.86667 0.8902 1" />
       </material>
     </visual>
     <collision>
@@ -2603,9 +2603,9 @@
           filename="../meshes/fourier_hand_6dof/R_ring_proximal_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
     <!-- <collision>
@@ -2661,9 +2661,9 @@
           filename="../meshes/fourier_hand_6dof/R_ring_intermediate_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.29804 0.29804 0.29804 1" />
       </material>
     </visual>
     <!-- <collision>
@@ -2708,7 +2708,7 @@
         <sphere radius="0.005" />
       </geometry>
       <material name="green">
-        <color rgba="0.25 0.25 0.25 1" />
+        <color rgba="0.9 1 0 1" />
       </material>
     </visual>
   </link>
@@ -2744,9 +2744,9 @@
           filename="../meshes/fourier_hand_6dof/R_pinky_proximal_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.8902 0.8902 0.91373 1" />
       </material>
     </visual>
     <collision>
@@ -2802,9 +2802,9 @@
           filename="../meshes/fourier_hand_6dof/R_pinky_intermediate_link.STL" />
       </geometry>
       <material
-        name="green">
+        name="">
         <color
-          rgba="0.25 0.25 0.25 1" />
+          rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
