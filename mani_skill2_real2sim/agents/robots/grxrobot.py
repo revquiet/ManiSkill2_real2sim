@@ -54,7 +54,23 @@ class GrxRobot(BaseAgent):
 
     def _after_init(self):
         super()._after_init()
-        
+
+        link_array = ["right_upper_arm_pitch_link", "right_upper_arm_roll_link", "right_upper_arm_yaw_link", "right_lower_arm_pitch_link", "right_hand_yaw_link", "right_hand_roll_link", "right_hand_pitch_link", "right_end_effector_link", 
+                      "R_hand_base_link", "R_thumb_proximal_base_link", "R_thumb_proximal_link", "R_thumb_distal_link", "R_thumb_tip_link", 
+                      "R_index_proximal_link", "R_index_intermediate_link", "R_index_tip_link", 
+                      "R_middle_proximal_link", "R_middle_intermediate_link", "R_middle_tip_link", 
+                      "R_ring_proximal_link", "R_ring_intermediate_link", "R_ring_tip_link", 
+                      "R_pinky_proximal_link", "R_pinky_intermediate_link", "R_pinky_tip_link"]
+        # 获取机器人所有的 Link
+        for link in self.robot.get_links():
+            if link.get_name() in link_array:
+                for visual in link.get_visual_bodies():
+                    for render_shape in visual.get_render_shapes():
+                        material = render_shape.material
+                        material.base_color = np.array([0, 0, 0, 1]) 
+            else:
+                pass
+
         # ignore collision between gripper bar link and two gripper fingers
         # left_upper_arm_yaw_link = get_entity_by_name(self.robot.get_links(),"left_upper_arm_yaw_link")
         # left_hand_yaw_link = get_entity_by_name(self.robot.get_links(),"left_hand_yaw_link")
@@ -150,6 +166,7 @@ class GrxRobot(BaseAgent):
         # self.right_jaw_link = get_entity_by_name(
         #     self.robot.get_links(), "right_jaw_link"
         # )
+
 
     # 1代表全部闭合，计算的是左右手的jaw关节的开闭状态
     def get_gripper_closedness(self):

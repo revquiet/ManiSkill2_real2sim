@@ -386,9 +386,9 @@ def main():
     # -------------------------------------------------------------------------- #
     import pickle
     # 打开 pkl 文件
-    with open('/home/fftai/Code/python/SimplerEnv/sysid_log/sysid_dataset_6dof.pkl', 'rb') as f:
+    with open('/home/fftai/Code/python/SimplerEnv/sysid_log/sysid_dataset_6dof_exp2.pkl', 'rb') as f:
         data = pickle.load(f)
-    data_iter = iter(data[4])
+    data_iter = iter(data[10])
 
     while True:
         # -------------------------------------------------------------------------- #
@@ -576,7 +576,7 @@ def main():
                 action_dict["gripper"] = gripper_action
             action = env.agent.controller.from_action_dict(action_dict)
 
-        print("action", action)
+        print("action", action[6:])
         obs, reward, terminated, truncated, info = env.step(action)
 
         # TODO
@@ -588,7 +588,7 @@ def main():
 
         # print("obj pose", env.obj.pose, "tcp pose", env.tcp.pose)
         # print("tcp pose wrt robot base", env.agent.robot.pose.inv() * env.tcp.pose)
-        print("qpos", env.agent.robot.get_qpos())
+        print("qpos   ", env.agent.robot.get_qpos()[7:])
         # print("reward", reward)
         # print("terminated", terminated, "truncated", truncated)
         # print("info", info)
